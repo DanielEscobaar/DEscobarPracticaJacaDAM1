@@ -5,10 +5,9 @@ import java.util.Scanner;
 
 public class ProgramaClient {
     static Scanner lector = new Scanner(System.in);
+    static public oClient client = new oClient();
 	public static void programa_Client(Connection connexioPsql) throws Exception{
 		// TODO Auto-generated method stub
-
-        oClient client = new oClient();
 		boolean login = false;
 		
         boolean menu = false;
@@ -36,7 +35,7 @@ public class ProgramaClient {
 				} while (!comprovacioInt);
                 switch (opcioMenu) {
                     case 1:
-                            comprarProductes(login,client,connexioPsql);
+                            comprarProductes(login,connexioPsql);
                         break;
                     case 2:
                             client = ferLogIn(connexioPsql);
@@ -54,13 +53,13 @@ public class ProgramaClient {
         } while (!menu);
         
     }
-    public static void comprarProductes(boolean login, oClient client, Connection connexioPsql) throws Exception{
+    public static void comprarProductes(boolean login, Connection connexioPsql) throws Exception{
 		if(login){
-			menuClient(client,connexioPsql);
+			menuClient(connexioPsql);
 		}
-		else menuNoClient(client,connexioPsql);
+		else menuNoClient(connexioPsql);
 	}
-	public static void menuNoClient(oClient client, Connection connexioPsql) throws Exception 
+	public static void menuNoClient(Connection connexioPsql) throws Exception 
 	{
         oFactura facturaClient = new oFactura();
 		LocalDate data = LocalDate.now();
@@ -126,7 +125,14 @@ public class ProgramaClient {
                     String opcio = lector.nextLine();
                     if(opcio.equalsIgnoreCase("SI"))
                     {
-                        client = ferRegister(connexioPsql);
+                    	String auxClient =  ferRegister(connexioPsql);
+                    	String [] taula = auxClient.split("-");
+                    	String dni = taula[0];
+                    	String nom = taula[1];
+                    	String correo = taula[2];
+                    	int telefon = Integer.parseInt(taula[3]);
+                    	String adresa = taula[4];
+                        client.oClient(dni, nom, correo, telefon, adresa);
                         comprovaOpcioSi = true;
                     }
                     else if(opcio.equalsIgnoreCase("NO"))
@@ -141,6 +147,8 @@ public class ProgramaClient {
                 }while(!comprovaOpcioSi && !comprovaOpcioNo);
                 if(comprovaOpcioSi)
                 {
+                	System.out.println("|-------------------------aaaaaaaaaaa"+facturaClient.getClient().getDni()+"-------------------------------|");
+                    
                     oFactura.tramitarFactura(facturaClient,lineaProductes,connexioPsql);
                     System.out.println("|   Gracies per comprar amb nosaltres, Pasi un bon dia.  |");
                     System.out.println("|--------------------------------------------------------|");
@@ -155,12 +163,13 @@ public class ProgramaClient {
 				
 		} while (!menuNoClient);	
 	}
-	public static void menuClient(oClient client, Connection connexioPsql)
+	public static void menuClient(Connection connexioPsql)
 	{
 
 	}	
-	public static oClient ferRegister(Connection connexioPsql) throws Exception 
+	public static String ferRegister(Connection connexioPsql) throws Exception 
 	{
+		String stringClient = null;
         oClient client = new oClient();
         String dni = "";
         String nom = "";
@@ -217,14 +226,20 @@ public class ProgramaClient {
         adresa = lector.nextLine();
         if(dni != null && nom != null && correo != null && telefon != 0 && adresa != null) 
         {
-        	client.oClient(dni, nom, correo, telefon, adresa);
+        	//client.oClient(dni, nom, correo, telefon, adresa);
+        	client.setDni(dni);
+        	client.setNom(nom);
+        	client.setCorreu(correo);
+        	client.setTelefon(telefon);
+        	client.setAdresa(adresa);
+        	stringClient = client.getDni() + "-" + client.getNom() + "-" + client.getCorreu() + "-" + client.getTelefon() + "-" + client.getAdresa();
             oClient.registrarClient(client, connexioPsql);
         }
         else System.out.println("|    Registre les dades novament, ha agut un error.      |");
         	 System.out.println("|--------------------------------------------------------|");
         
         
-		return client;
+		return stringClient;
 	}
 	public static oClient ferLogIn(Connection connexioPsql) 
 	{

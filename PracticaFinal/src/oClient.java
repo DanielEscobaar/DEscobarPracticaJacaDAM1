@@ -57,7 +57,6 @@ public class oClient {
 		boolean registrat = false;
 		Statement escriure = connexioPsql.createStatement(ResultSet.TYPE_FORWARD_ONLY,ResultSet.CONCUR_UPDATABLE);
 		escriure.executeUpdate("INSERT INTO clients values('" + client.getDni() + "','" + client.getNom() + "','" + client.getCorreu() + "'," + client.getTelefon() + ",'" + client.getAdresa() + "')");
-		escriure.close();
 		registrat = true;	
 		return registrat;
 	}

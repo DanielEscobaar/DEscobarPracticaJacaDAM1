@@ -22,16 +22,25 @@ public class oFactura {
 	public static void tramitarFactura(oFactura facturaClient, ArrayList<oProducte> lineaProductes,Connection connexioPsql) throws Exception {
 		// estat
 		Statement stmt=connexioPsql.createStatement(ResultSet.TYPE_FORWARD_ONLY,ResultSet.CONCUR_UPDATABLE);
-		stmt.executeUpdate("INSERT INTO factures_client values('" + facturaClient.getClient().getDni() + "', '"+ facturaClient.getData() +"')");
-		for(int i = 0; i < lineaProductes.size(); i++) 
-		{
-			stmt.executeUpdate("INSERT INTO lineafactura values(" + facturaClient.getNumFactura() + "," + (i+1) + "," + lineaProductes.get(i).codi + "," + lineaProductes.get(i).quantitat + "," + lineaProductes.get(i).preu + "," + (lineaProductes.get(i).preu * lineaProductes.get(i).quantitat ) + "," + lineaProductes.get(i).iva);
-		}
+		
+		String dataFactura = facturaClient.getData().getDayOfMonth()+"/"+ facturaClient.getData().getMonthValue()+"/"+ facturaClient.getData().getYear();
+		stmt.executeUpdate("INSERT INTO factures_client values("+facturaClient.getNumFactura()+",'" + facturaClient.getClient().getDni() + "', '"+ dataFactura +"')");
+		entrarTotesLesLineas(facturaClient,lineaProductes,connexioPsql);
+		
 		System.out.println("|--------------------------------------------------------|");
 		System.out.println("|       La seva compra s'ha tramitat correctament.       |");
 		System.out.println("|        (Torn-hi ha comprar quan voste vulgui.)         |");
 		System.out.println("|--------------------------------------------------------|");
 	}
+	private static void entrarTotesLesLineas(oFactura facturaClient, ArrayList<oProducte> lineaProductes, Connection connexioPsql) throws Exception {
+		// TODO Auto-generated method stub
+		for(int i = 0; i < lineaProductes.size(); i++) 
+		{
+			Statement stmt2=connexioPsql.createStatement(ResultSet.TYPE_FORWARD_ONLY,ResultSet.CONCUR_UPDATABLE);
+			stmt2.executeUpdate("INSERT INTO lineafactura values(" + facturaClient.getNumFactura() + "," + (i+1) + "," + lineaProductes.get(i).codi + "," + lineaProductes.get(i).quantitat + "," + lineaProductes.get(i).preu + "," + (lineaProductes.get(i).preu * lineaProductes.get(i).quantitat) + "," + lineaProductes.get(i).iva);
+		}
+	}
+
 	public static boolean comprovaNumFactura(int numFactura,Connection connexioPsql) throws Exception {
 		boolean existeix = false;
 		// estat
