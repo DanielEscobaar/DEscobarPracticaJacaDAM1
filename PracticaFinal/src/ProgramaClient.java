@@ -50,7 +50,6 @@ public class ProgramaClient {
                         break;
                 }
         } while (!menu);
-        
     }
     public static void comprarProductes(boolean login, Connection connexioPsql) throws Exception{
 		if(login){

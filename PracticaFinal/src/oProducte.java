@@ -80,11 +80,56 @@ public class oProducte {
 		resultatQuery.next();
 		if(quantitatProducte <= resultatQuery.getInt("stock")) 
 		{
-			int nouStock = resultatQuery.getInt("stock") - quantitatProducte;
-			resultatQuery.updateInt("stock", nouStock);
-			resultatQuery.updateRow();
 			return resultat = 0;
 		}
 		else return resultat = 1;
+	}
+
+	public int getCodi() {
+		return codi;
+	}
+
+	public void setCodi(int codi) {
+		this.codi = codi;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+
+	public Double getPreu() {
+		return preu;
+	}
+
+	public void setPreu(Double preu) {
+		this.preu = preu;
+	}
+
+	public Double getIva() {
+		return iva;
+	}
+
+	public void setIva(Double iva) {
+		this.iva = iva;
+	}
+
+	public int getQuantitat() {
+		return quantitat;
+	}
+
+	public void setQuantitat(int quantitat) {
+		this.quantitat = quantitat;
 	}
 }

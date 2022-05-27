@@ -25,10 +25,25 @@ public class oFactura {
 		String dataFactura = facturaClient.getData().getDayOfMonth()+"/"+ facturaClient.getData().getMonthValue()+"/"+ facturaClient.getData().getYear();
 		stmt.executeUpdate("INSERT INTO factures_client values("+facturaClient.getNumFactura()+",'" + facturaClient.getClient().getDni() + "', '"+ dataFactura +"')");
 		entrarTotesLesLineas(facturaClient,lineaProductes,connexioPsql);
+		restarStockProductes(facturaClient,lineaProductes,connexioPsql);
 		
 		System.out.println("|       La seva compra s'ha tramitat correctament.       |");
 		System.out.println("|        (Torn-hi ha comprar quan voste vulgui.)         |");
 	}
+	private static void restarStockProductes(oFactura facturaClient, ArrayList<oProducte> lineaProductes,
+			Connection connexioPsql) throws SQLException {
+		for(int i = 0; i < lineaProductes.size(); i++) 
+		{
+			Statement stmt2=connexioPsql.createStatement(ResultSet.TYPE_FORWARD_ONLY,ResultSet.CONCUR_UPDATABLE);
+			ResultSet resultatQuery = stmt2.executeQuery("SELECT * FROM productes WHERE codi = "+lineaProductes.get(i).getCodi()+";");
+			resultatQuery.next();
+			int nouStock = resultatQuery.getInt("stock") - lineaProductes.get(i).getQuantitat();
+			resultatQuery.updateInt("stock", nouStock);
+			resultatQuery.updateRow();
+		}
+		
+	}
+
 	private static void entrarTotesLesLineas(oFactura facturaClient, ArrayList<oProducte> lineaProductes, Connection connexioPsql) throws Exception {
 		// TODO Auto-generated method stub
 		for(int i = 0; i < lineaProductes.size(); i++) 
