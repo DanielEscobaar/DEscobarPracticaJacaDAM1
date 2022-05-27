@@ -147,9 +147,7 @@ public class ProgramaClient {
                 }while(!comprovaOpcioSi && !comprovaOpcioNo);
                 if(comprovaOpcioSi)
                 {
-                	System.out.println("|-------------------------aaaaaaaaaaa"+facturaClient.getClient().getDni()+"-------------------------------|");
-                    
-                    oFactura.tramitarFactura(facturaClient,lineaProductes,connexioPsql);
+                	oFactura.tramitarFactura(facturaClient,lineaProductes,connexioPsql);
                     System.out.println("|   Gracies per comprar amb nosaltres, Pasi un bon dia.  |");
                     System.out.println("|--------------------------------------------------------|");
                     menuNoClient = true;
@@ -237,8 +235,7 @@ public class ProgramaClient {
         }
         else System.out.println("|    Registre les dades novament, ha agut un error.      |");
         	 System.out.println("|--------------------------------------------------------|");
-        
-        
+        	 
 		return stringClient;
 	}
 	public static oClient ferLogIn(Connection connexioPsql) 

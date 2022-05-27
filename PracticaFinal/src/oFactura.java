@@ -37,7 +37,16 @@ public class oFactura {
 		for(int i = 0; i < lineaProductes.size(); i++) 
 		{
 			Statement stmt2=connexioPsql.createStatement(ResultSet.TYPE_FORWARD_ONLY,ResultSet.CONCUR_UPDATABLE);
-			stmt2.executeUpdate("INSERT INTO lineafactura values(" + facturaClient.getNumFactura() + "," + (i+1) + "," + lineaProductes.get(i).codi + "," + lineaProductes.get(i).quantitat + "," + lineaProductes.get(i).preu + "," + (lineaProductes.get(i).preu * lineaProductes.get(i).quantitat) + "," + lineaProductes.get(i).iva);
+			int numFactura = facturaClient.getNumFactura();
+			int numLinea = i;
+			int codiProducte = lineaProductes.get(i).codi;
+			int quantitatProducte = lineaProductes.get(i).quantitat;
+			Double preuProducte = lineaProductes.get(i).preu;
+			Double totalProducte = (lineaProductes.get(i).preu * lineaProductes.get(i).quantitat);
+			Double iva = lineaProductes.get(i).iva;
+			
+			stmt2.executeUpdate("INSERT INTO lineafactura values("+ numFactura + "," + numLinea + "," + codiProducte + "," + quantitatProducte + 
+			"," + preuProducte + "," + totalProducte + "," + iva+")");
 		}
 	}
 
