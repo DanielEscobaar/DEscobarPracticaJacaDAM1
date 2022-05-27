@@ -98,9 +98,18 @@ public class ProgramaClient {
 					System.out.println("|            Entra la quantitat que desitges:            |");
 					System.out.println("|--------------------------------------------------------|");
 					if(lector.hasNextInt()){
-						quantitatProducte= lector.nextInt();
-						lector.nextLine();
-						comprovacioInt2 = true;
+						if(oProducte.verificarQuantitat(codiProducte,quantitatProducte,connexioPsql) == 0) 
+						{
+							quantitatProducte= lector.nextInt();
+							lector.nextLine();
+							comprovacioInt2 = true;
+						}
+						else 
+						{
+							System.out.println("|  Aquesta quantitat es major al stock, torna a provar.  |");
+							System.out.println("|--------------------------------------------------------|");
+						}
+						
 					}
 					else {
 						System.out.println("|    Aquesta opcio no es correcte, torna a provar.       |");

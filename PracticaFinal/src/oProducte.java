@@ -70,4 +70,25 @@ public class oProducte {
 		if(resultat.next()) return returnInt = 0;
 		else return returnInt = 1;
 	}
+
+	public static int verificarQuantitat(int codiProducte, int quantitatProducte, Connection connexioPsql) throws SQLException {
+		int resultat = -1;
+		
+		Statement stmt=connexioPsql.createStatement(ResultSet.TYPE_FORWARD_ONLY,ResultSet.CONCUR_READ_ONLY);
+		// resultat
+		ResultSet resultatQuery = stmt.executeQuery("SELECT * FROM productes WHERE codi = "+codiProducte+";");
+		if(resultatQuery.next()) 
+		{
+			if(resultatQuery.getInt("stock") >= quantitatProducte) 
+			{
+				int nouStock = resultatQuery.getInt("stock") - quantitatProducte;
+				resultatQuery.updateInt("stock", nouStock);
+				resultatQuery.updateRow();
+				return resultat = 0;
+			}
+			else return resultat = 1;
+			
+		}
+		return resultat;
+	}
 }

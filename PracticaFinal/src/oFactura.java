@@ -17,8 +17,7 @@ public class oFactura {
 		this.numFactura = numFactura;
 		this.client = client;
 		this.data = data;
-	}
-	
+	}	
 	public static void tramitarFactura(oFactura facturaClient, ArrayList<oProducte> lineaProductes,Connection connexioPsql) throws Exception {
 		// estat
 		Statement stmt=connexioPsql.createStatement(ResultSet.TYPE_FORWARD_ONLY,ResultSet.CONCUR_UPDATABLE);
@@ -47,7 +46,6 @@ public class oFactura {
 			"," + preuProducte + "," + totalProducte + "," + iva+")");
 		}
 	}
-
 	public static boolean comprovaNumFactura(int numFactura,Connection connexioPsql) throws Exception {
 		boolean existeix = false;
 		// estat
@@ -57,30 +55,23 @@ public class oFactura {
 		if(resultat.next()) return existeix = true;
 		else return existeix = false;
 	}
+	
 	public int getNumFactura() {
 		return numFactura;
 	}
-
 	public void setNumFactura(int numFactura) {
 		this.numFactura = numFactura;
 	}
-
 	public oClient getClient() {
 		return client;
 	}
-
 	public void setClient(oClient client) {
 		this.client = client;
 	}
-
 	public LocalDate getData() {
 		return data;
 	}
-
 	public void setData(LocalDate data) {
 		this.data = data;
 	}
-
-	
-	
 }
