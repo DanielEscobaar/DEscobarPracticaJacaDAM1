@@ -43,7 +43,6 @@ public class ProgramaClient {
                         break;
                     case 3:
                             System.out.println("|    Gracies per visitar la pagina, Pasi un bon dia.     |");
-                            System.out.println("|--------------------------------------------------------|");
                             menu = true;
                         break;
                     default:

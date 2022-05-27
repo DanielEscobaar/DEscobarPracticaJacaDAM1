@@ -27,10 +27,8 @@ public class oFactura {
 		stmt.executeUpdate("INSERT INTO factures_client values("+facturaClient.getNumFactura()+",'" + facturaClient.getClient().getDni() + "', '"+ dataFactura +"')");
 		entrarTotesLesLineas(facturaClient,lineaProductes,connexioPsql);
 		
-		System.out.println("|--------------------------------------------------------|");
 		System.out.println("|       La seva compra s'ha tramitat correctament.       |");
 		System.out.println("|        (Torn-hi ha comprar quan voste vulgui.)         |");
-		System.out.println("|--------------------------------------------------------|");
 	}
 	private static void entrarTotesLesLineas(oFactura facturaClient, ArrayList<oProducte> lineaProductes, Connection connexioPsql) throws Exception {
 		// TODO Auto-generated method stub
