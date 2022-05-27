@@ -113,7 +113,7 @@ public class ProgramaClient {
 
 			}
 			else if(oProducte.comprovaExistenciaProdu(codiProducte, connexioPsql) == 1){
-				System.out.println("|    Aquesta opcio no existeix, torna a provar.       |");
+				System.out.println("|      Aquesta opcio no existeix, torna a provar.        |");
 			}
 			else{
                 boolean comprovaOpcioSi = false;
@@ -162,11 +162,11 @@ public class ProgramaClient {
 	public static oClient ferRegister(Connection connexioPsql) throws Exception 
 	{
         oClient client = new oClient();
-        String dni;
-        String nom;
-        String correo;
+        String dni = "";
+        String nom = "";
+        String correo = "";
         int telefon = 0;
-        String adresa;
+        String adresa = "";
         System.out.println("|--------------------------------------------------------|");
 		System.out.println("|                         Register                       |");
 		System.out.println("|--------------------------------------------------------|");
@@ -200,10 +200,12 @@ public class ProgramaClient {
             System.out.println("|                    Entra el teu telefon:               |");
             if(lector.hasNextInt())
             {
-                String auxTelefon = Integer.toString(lector.nextInt());
+            	int auxTelInt = lector.nextInt();
+            	lector.nextLine();
+                String auxTelefon = Integer.toString(auxTelInt);
                 if(auxTelefon.length() == 9)
                 {
-                    telefon = Integer.parseInt(auxTelefon);
+                    telefon = auxTelInt;
                     validacioTelefon = true;
                 }
                 else System.out.println("|    Aquest telefon es incorrecte, torna a provar.       |");
@@ -213,9 +215,15 @@ public class ProgramaClient {
         
         System.out.println("|                   Entra la teva adreça:                |");
         adresa = lector.nextLine();
-        System.out.println("|--------------------------------------------------------|");
-        client.oClient(dni, nom, correo, telefon, adresa);
-        oClient.registrarClient(client, connexioPsql);
+        if(dni != null && nom != null && correo != null && telefon != 0 && adresa != null) 
+        {
+        	client.oClient(dni, nom, correo, telefon, adresa);
+            oClient.registrarClient(client, connexioPsql);
+        }
+        else System.out.println("|    Registre les dades novament, ha agut un error.      |");
+        	 System.out.println("|--------------------------------------------------------|");
+        
+        
 		return client;
 	}
 	public static oClient ferLogIn(Connection connexioPsql) 

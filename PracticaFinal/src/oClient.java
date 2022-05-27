@@ -24,31 +24,31 @@ public class oClient {
 		this.adresa = adresa;
 	}
 	public String getDni() {
-		return dni;
+		return this.dni;
 	}
 	public void setDni(String dni) {
 		this.dni = dni;
 	}
 	public String getNom() {
-		return nom;
+		return this.nom;
 	}
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
 	public String getCorreu() {
-		return correo;
+		return this.correo;
 	}
 	public void setCorreu(String correu) {
 		this.correo = correu;
 	}
 	public int getTelefon() {
-		return telefon;
+		return this.telefon;
 	}
 	public void setTelefon(int telefon) {
 		this.telefon = telefon;
 	}
 	public String getAdresa() {
-		return adresa;
+		return this.adresa;
 	}
 	public void setAdresa(String adresa) {
 		this.adresa = adresa;
@@ -57,6 +57,7 @@ public class oClient {
 		boolean registrat = false;
 		Statement escriure = connexioPsql.createStatement(ResultSet.TYPE_FORWARD_ONLY,ResultSet.CONCUR_UPDATABLE);
 		escriure.executeUpdate("INSERT INTO clients values('" + client.getDni() + "','" + client.getNom() + "','" + client.getCorreu() + "'," + client.getTelefon() + ",'" + client.getAdresa() + "')");
+		escriure.close();
 		registrat = true;	
 		return registrat;
 	}
@@ -65,7 +66,7 @@ public class oClient {
 		// estat
 		Statement stmt=connexioPsql.createStatement(ResultSet.TYPE_FORWARD_ONLY,ResultSet.CONCUR_READ_ONLY);
 		// resultat
-		ResultSet resultat = stmt.executeQuery("SELECT dni FROM clients WHERE dni = "+dni+";");
+		ResultSet resultat = stmt.executeQuery("SELECT dni FROM clients WHERE dni = '"+dni+"';");
 		if(resultat.next()) return returnBool = true;
 		else return returnBool = false;
 	}
