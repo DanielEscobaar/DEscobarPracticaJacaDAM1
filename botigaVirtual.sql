@@ -5,7 +5,7 @@
 -- Dumped from database version 14.1
 -- Dumped by pg_dump version 14.1
 
--- Started on 2022-05-27 14:30:51
+-- Started on 2022-05-27 15:42:23
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -279,7 +279,7 @@ ALTER TABLE ONLY public.lineafactura
     ADD CONSTRAINT fk_numfactura FOREIGN KEY (numfactura) REFERENCES public.factures_client(numfactura);
 
 
--- Completed on 2022-05-27 14:30:52
+-- Completed on 2022-05-27 15:42:23
 
 --
 -- PostgreSQL database dump complete
